@@ -8,7 +8,7 @@ class Movie < ActiveRecord::Base
     if ratings
       ratings.keys
     else
-      ["G", "PG", "PG-13", "R"] #will need to delete this and make it [] at the end.
+      []
     end
   end
 end
