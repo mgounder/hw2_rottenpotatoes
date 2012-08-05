@@ -9,6 +9,7 @@ class MoviesController < ApplicationController
   def index
 #    session.clear
     unless params[:commit] || session[:ratings].nil?
+      flash.keep
       redirect_to movies_path({ ratings: session[:ratings], sort_by: session[:sort_by] }) unless params[:ratings] || params[:sort_by]
     end
     @all_ratings = Movie.all_ratings
