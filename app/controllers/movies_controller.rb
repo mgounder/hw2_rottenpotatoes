@@ -7,9 +7,9 @@ class MoviesController < ApplicationController
   end
 
   def index
-#    session.clear
-    params[:ratings] ||= session[:ratings] unless params[:commit]
-    params[:sort_by] ||= session[:sort_by] unless params[:commit]
+    unless params[:commit]
+      redirect_to movies_path({ ratings: session[:ratings], sort_by: session[:sort_by] }) unless params[:ratings] || params[:sort_by]
+    end
     @all_ratings = Movie.all_ratings
     @filtered_ratings = Movie.filtered_ratings(params[:ratings])
     if params[:sort_by]
