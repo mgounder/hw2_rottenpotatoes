@@ -7,6 +7,9 @@ class MoviesController < ApplicationController
   end
 
   def index
+#    session.clear
+    params[:ratings] ||= session[:ratings] unless params[:commit]
+    params[:sort_by] ||= session[:sort_by] unless params[:commit]
     @all_ratings = Movie.all_ratings
     @filtered_ratings = Movie.filtered_ratings(params[:ratings])
     if params[:sort_by]
@@ -14,6 +17,16 @@ class MoviesController < ApplicationController
       @sort_by = params[:sort_by]
     else 
       @movies = Movie.where({ :rating => @filtered_ratings })
+    end
+    session[:ratings] = params[:ratings]
+    session[:sort_by] = params[:sort_by]
+  end
+  
+  def no_params?(ratings_param, sort_by_param)
+    if ratings_param || sort_by_param
+      false
+    else
+      true
     end
   end
 
