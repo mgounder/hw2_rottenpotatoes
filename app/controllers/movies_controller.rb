@@ -8,7 +8,7 @@ class MoviesController < ApplicationController
 
   def index
 #    session.clear
-    unless params[:commit]
+    unless params[:commit] || session[:ratings].nil?
       redirect_to movies_path({ ratings: session[:ratings], sort_by: session[:sort_by] }) unless params[:ratings] || params[:sort_by]
     end
     @all_ratings = Movie.all_ratings
@@ -23,14 +23,6 @@ class MoviesController < ApplicationController
     session[:sort_by] = params[:sort_by]
   end
   
-  def no_params?(ratings_param, sort_by_param)
-    if ratings_param || sort_by_param
-      false
-    else
-      true
-    end
-  end
-
   def new
     # default: render 'new' template
   end
